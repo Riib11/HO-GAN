@@ -7,7 +7,7 @@ Usage: python3 dcgan_mnist.py
 '''
 
 iterations = 2000
-dataname   = 'simpleshape'
+dataname   = 'reflection'
 
 # tensorflow
 import numpy as np
