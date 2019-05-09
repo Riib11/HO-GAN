@@ -6,7 +6,7 @@ Dependencies: tensorflow 1.0 and keras 2.0
 Usage: python3 dcgan_mnist.py
 '''
 
-iterations = 1000
+iterations = 2000
 dataname   = 'simpleshape'
 
 # tensorflow
@@ -242,8 +242,9 @@ class CUSTOM_DCGAN(object):
         samples_dir = Path(self.name+'__samples')
         if not samples_dir.exists(): os.mkdir(samples_dir.name)
 
-        filename = '{dir}_{attrs}.png'.format(
+        filename = '{dir}/{name}__{attrs}.png'.format(
             dir   = samples_dir.name,
+            name  = self.name,
             attrs = '_'.join([ '%s=%s' % (k,v) for (k,v) in attributes.items() ])
         )
 
