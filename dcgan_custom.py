@@ -158,8 +158,8 @@ class DCGAN(object):
 
 class CUSTOM_DCGAN(object):
     def __init__(self, dataname):
-        self.name = '%s_1' % name
-        self.training_dir = dataname
+        self.name = '%s_1' % dataname
+        self.training_dir = '%s_1' % dataname
 
         self.img_rows = 28
         self.img_cols = 28
