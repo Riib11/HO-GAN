@@ -6,6 +6,9 @@ Dependencies: tensorflow 1.0 and keras 2.0
 Usage: python3 dcgan_mnist.py
 '''
 
+iterations = 1000
+dataname   = 'simpleshape'
+
 # tensorflow
 import numpy as np
 from tensorflow.examples.tutorials.mnist import input_data
@@ -27,6 +30,7 @@ from PIL import Image
 # utilities
 from tqdm import tqdm
 import time, os
+from pathlib import Path
 
 ##############################################################################################################################
 ##############################################################################################################################
@@ -153,9 +157,9 @@ class DCGAN(object):
 ##############################################################################################################################
 
 class CUSTOM_DCGAN(object):
-    def __init__(self, name):
-        self.name = name
-        self.training_dir = name
+    def __init__(self, dataname):
+        self.name = '%s_1' % name
+        self.training_dir = dataname
 
         self.img_rows = 28
         self.img_cols = 28
@@ -235,7 +239,13 @@ class CUSTOM_DCGAN(object):
                  'noise': 'some' if not noise is None else 'none'
         }
 
-        filename = self.name + '_' + '_'.join([ '%s=%s' % (k,v) for (k,v) in attributes.items() ])
+        samples_dir = Path(self.name+'__samples')
+        if not samples_dir.exists(): os.mkdir(samples_dir.name)
+
+        filename = '{dir}_{attrs}.png'.format(
+            dir   = samples_dir.name,
+            attrs = '_'.join([ '%s=%s' % (k,v) for (k,v) in attributes.items() ])
+        )
 
         # choose images
         if fake:
@@ -254,7 +264,7 @@ class CUSTOM_DCGAN(object):
             plt.axis('off')
         plt.tight_layout()
         if save2file:
-            plt.savefig('%s.png' % filename)
+            plt.savefig(filename)
             plt.close('all')
         else:
             plt.show()
@@ -264,10 +274,10 @@ class CUSTOM_DCGAN(object):
 ##############################################################################################################################
 
 if __name__ == '__main__':
-    custom_dcgan = CUSTOM_DCGAN("solidcolor_1")
+    custom_dcgan = CUSTOM_DCGAN(dataname)
 
     timer = ElapsedTimer()
-    custom_dcgan.train(iterations=1000, batchsize=32, save_interval=10)
+    custom_dcgan.train(iterations=iterations, batchsize=32, save_interval=10)
     # custom_dcgan.train(iterations=10000, batchsize=256, save_interval=500)
     timer.elapsed_time()
 
