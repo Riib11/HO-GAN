@@ -7,7 +7,7 @@ Usage: python3 dcgan_mnist.py
 '''
 
 iterations = 2000
-dataname   = 'reflection'
+dataname   = 'matching'
 
 # tensorflow
 import numpy as np
@@ -171,6 +171,7 @@ class CUSTOM_DCGAN(object):
 
         for directory in os.listdir(self.training_dir):
             if directory.endswith('.DS_Store'): continue
+            print('loading images in directory: %s' % directory)
             classname = directory
             self.classes.append(classname)
             img_cls = len(self.classes) - 1
